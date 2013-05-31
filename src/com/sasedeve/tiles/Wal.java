@@ -290,7 +290,6 @@ public class Wal {
 			     GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
 			     bitmap.recycle();
 			    }
-
 			    if (textureHandle[0] == 0)
 			    {
 			        throw new RuntimeException("Error loading texture.");
