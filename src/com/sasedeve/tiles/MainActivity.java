@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         
         mGLView = (MyGLSurfaceView)findViewById(R.id.gl_surface_view);
-       
+        //mGLView.setDebugFlags(GLSurfaceView.DEBUG_LOG_GL_CALLS | GLSurfaceView.DEBUG_CHECK_GL_ERROR);
         mGLView.setEGLContextClientVersion(2);
         Rendererwall=new WallRenderer(this);
         mGLView.setRenderer(Rendererwall);

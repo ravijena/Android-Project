@@ -253,6 +253,8 @@ public class Wal {
 			        mWallVertices.position(0);
 			        GLES20.glVertexAttribPointer(mPositionHandle, mPositionDataSize, GLES20.GL_FLOAT, false,0, mWallVertices);
 			        GLES20.glEnableVertexAttribArray(mPositionHandle);
+			        //GLES20.glEnableVertexAttribArray(mPositionHandle);
+			     
 			        //texture1
 			        texturebuffer.position(0);
 			        GLES20.glVertexAttribPointer(mTextureHandle,2,GLES20.GL_FLOAT,false,0,texturebuffer);
@@ -260,7 +262,8 @@ public class Wal {
 			        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMVPMatrix, 0);
 			        //drawing one part
 			        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, size);
-			        
+			        GLES20.glDisableVertexAttribArray(mPositionHandle);
+			        GLES20.glDisableVertexAttribArray(mTextureHandle);
 			        mWallVertices1.position(0);
 			        GLES20.glVertexAttribPointer(mPositionHandle1, mPositionDataSize, GLES20.GL_FLOAT, false,0, mWallVertices1);
 			        GLES20.glEnableVertexAttribArray(mPositionHandle1);

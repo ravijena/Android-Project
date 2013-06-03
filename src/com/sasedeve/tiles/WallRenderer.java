@@ -13,8 +13,8 @@ public class WallRenderer implements Renderer {
 	private float[] mProjectionMatrix = new float[16];
 	private float[] mViewMatrix = new float[16];
 	private float[] mMVPMatrix = new float[16];
-	Wal wall;
-		
+	ExampleWall wall;
+	//Wal wall;	
  public WallRenderer(Context context){
 		this.context=context;
 		
@@ -69,7 +69,8 @@ public class WallRenderer implements Renderer {
 		   
 		
 		GLES20.glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
-		wall=new Wal(context,4);
+		wall=new ExampleWall(context,4);
+		//wall=new Wal(context, 4);
 		
 	}
 
