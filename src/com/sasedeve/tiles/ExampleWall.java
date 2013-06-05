@@ -139,6 +139,7 @@ public ExampleWall(Context context,float s){
 			texturebuffer1=ByteBuffer.allocateDirect(textureVertices1.length * mBytesPerFloat)
 			        .order(ByteOrder.nativeOrder()).asFloatBuffer();
 			texturebuffer1.put(textureVertices1).position(0);
+			
 
 			
 		int vertexShaderHandle=loadShader(GLES20.GL_VERTEX_SHADER,vertexShader);	
@@ -210,9 +211,9 @@ public void drawWall(final float[] mMVPMatrix,int i)
 		        GLES20.glEnableVertexAttribArray(mTextureHandle);
 		        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMVPMatrix, 0);
 		        //drawing one part
-		        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, size);
+		       /* GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, size);*/
 		        
-		       /* mWallVertices1.position(0);
+		        mWallVertices1.position(0);
 		        GLES20.glVertexAttribPointer(mPositionHandle, mPositionDataSize, GLES20.GL_FLOAT, false,0, mWallVertices1);
 		        GLES20.glEnableVertexAttribArray(mPositionHandle);
 		       //texture2
@@ -221,7 +222,8 @@ public void drawWall(final float[] mMVPMatrix,int i)
 		        GLES20.glEnableVertexAttribArray(mTextureHandle1);
 		        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMVPMatrix, 0);
 		        //drawing another part
-		        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, size1);*/
+		        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, size1);
+		        //GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, size);
 		 }
 private int loadGLTexture(Context context, final int resourceId)
 	{

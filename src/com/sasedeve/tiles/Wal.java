@@ -119,7 +119,7 @@ public class Wal {
 			+ "void main() \n"	
 			+ "{ \n"
 			 +   "   vec4 baseColor; \n"
-	        +   "   baseColor = texture2D(u_Texture, v_TexCoordinate);      \n"
+	        +   "   baseColor = texture2D(u_Texture, v_TexCoordinate);  \n"
 			 
 	     +   "   gl_FragColor = baseColor;   \n"	
 			+ "} \n";
@@ -246,14 +246,14 @@ public class Wal {
 			{	  
     	
     		
-    		mTextureHandle = loadGLTexture(context, R.drawable.floor);	
+    		mTextureHandle = loadGLTexture(context, R.drawable.h);	
     		
-    		mTextureHandle1 = loadGLTexture(context, R.drawable.as);
+    		
 		
 			        mWallVertices.position(0);
 			        GLES20.glVertexAttribPointer(mPositionHandle, mPositionDataSize, GLES20.GL_FLOAT, false,0, mWallVertices);
 			        GLES20.glEnableVertexAttribArray(mPositionHandle);
-			        //GLES20.glEnableVertexAttribArray(mPositionHandle);
+			        
 			     
 			        //texture1
 			        texturebuffer.position(0);
@@ -262,17 +262,22 @@ public class Wal {
 			        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMVPMatrix, 0);
 			        //drawing one part
 			        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, size);
-			        GLES20.glDisableVertexAttribArray(mPositionHandle);
-			        GLES20.glDisableVertexAttribArray(mTextureHandle);
+			       
+			        mTextureHandle1 = loadGLTexture(context, R.drawable.as);
+			         //GLES20.glDisableVertexAttribArray(mPositionHandle);
+			        //GLES20.glDisableVertexAttribArray(mTextureHandle);
 			        mWallVertices1.position(0);
 			        GLES20.glVertexAttribPointer(mPositionHandle1, mPositionDataSize, GLES20.GL_FLOAT, false,0, mWallVertices1);
+			        //GLES20.glDisableVertexAttribArray(mPositionHandle1);
 			        GLES20.glEnableVertexAttribArray(mPositionHandle1);
 			       //texture2
 			        texturebuffer1.position(0);
 			        GLES20.glVertexAttribPointer(mTextureHandle1,2,GLES20.GL_FLOAT,false,0,texturebuffer1);
+			        GLES20.glDisableVertexAttribArray(mTextureHandle1);
 			        GLES20.glEnableVertexAttribArray(mTextureHandle1);
 			        GLES20.glUniformMatrix4fv(mMVPMatrixHandle1, 1, false, mMVPMatrix, 0);
 			        //drawing another part
+			        
 			        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, size1);
 			 }
     private int loadGLTexture(Context context, final int resourceId)
@@ -286,7 +291,7 @@ public class Wal {
 			     final BitmapFactory.Options options = new BitmapFactory.Options();
 			     options.inScaled = false;  
 			     final Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resourceId, options);
-			     //GLES20.glActiveTexture(GLES20.GL_TEXTURE );
+			    // GLES20.glActiveTexture(GLES20.GL_TEXTURE1 );
 			     GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureHandle[0]);
 			     GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
 			     GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_NEAREST);
