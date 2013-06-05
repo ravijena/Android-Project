@@ -134,6 +134,12 @@ public class ExampleWall {
 				
 				mWallVertices=new FloatBuffer[2];
 				texturebuffer=new FloatBuffer[2];
+				mMVPMatrixHandle=new int[2];
+				mPositionHandle=new int[2];
+				mTextureHandle=new int[2];	
+				int programHandle[]=new int[2];
+				int vertexShaderHandle=loadShader(GLES20.GL_VERTEX_SHADER,vertexShader);	
+				int fragmentShaderHandle=loadShader(GLES20.GL_FRAGMENT_SHADER,fragmentShader);
 				for(int h=0;h<2;h++)
 				{
 				mWallVertices[h] = ByteBuffer.allocateDirect(wallVerticesData[h].length * mBytesPerFloat)
@@ -150,32 +156,32 @@ public class ExampleWall {
 				/*texturebuffer[1]=ByteBuffer.allocateDirect(textureVerticess[1].length * mBytesPerFloat)
 				        .order(ByteOrder.nativeOrder()).asFloatBuffer();
 				texturebuffer[1].put(textureVerticess[1]).position(0);*/
-				}
 				
-			int vertexShaderHandle=loadShader(GLES20.GL_VERTEX_SHADER,vertexShader);	
-			int fragmentShaderHandle=loadShader(GLES20.GL_FRAGMENT_SHADER,fragmentShader);
+				
+			/*int vertexShaderHandle=loadShader(GLES20.GL_VERTEX_SHADER,vertexShader);	
+			int fragmentShaderHandle=loadShader(GLES20.GL_FRAGMENT_SHADER,fragmentShader);*/
 			
-			int programHandle = GLES20.glCreateProgram();
+			programHandle[h] = GLES20.glCreateProgram();
 			
 
-				if (programHandle != 0)
+				if (programHandle[h] != 0)
 				{
-				GLES20.glAttachShader(programHandle, vertexShaderHandle);	
-				GLES20.glAttachShader(programHandle, fragmentShaderHandle);
-				GLES20.glUseProgram(programHandle);
-			    GLES20.glBindAttribLocation(programHandle, 0, "a_Position");
-				GLES20.glBindAttribLocation(programHandle, 1, "a_TexCoordinate");
-				GLES20.glLinkProgram(programHandle);
-			final int[] linkStatus = new int[1];
-				GLES20.glGetProgramiv(programHandle, GLES20.GL_LINK_STATUS, linkStatus, 0);
+				GLES20.glAttachShader(programHandle[h], vertexShaderHandle);	
+				GLES20.glAttachShader(programHandle[h], fragmentShaderHandle);
+				GLES20.glUseProgram(programHandle[h]);
+			    GLES20.glBindAttribLocation(programHandle[h], 0, "a_Position");
+				GLES20.glBindAttribLocation(programHandle[h], 1, "a_TexCoordinate");
+				GLES20.glLinkProgram(programHandle[h]);
+			    final int[] linkStatus = new int[1];
+				GLES20.glGetProgramiv(programHandle[h], GLES20.GL_LINK_STATUS, linkStatus, 0);
 
 				if (linkStatus[0] == 0)
 				{	
-				GLES20.glDeleteProgram(programHandle);
-				programHandle = 0;
+				GLES20.glDeleteProgram(programHandle[h]);
+				programHandle[h] = 0;
 				}
 				}
-				int vertexShaderHandle1=loadShader(GLES20.GL_VERTEX_SHADER,vertexShader);	
+				/*int vertexShaderHandle1=loadShader(GLES20.GL_VERTEX_SHADER,vertexShader);	
 				int fragmentShaderHandle1=loadShader(GLES20.GL_FRAGMENT_SHADER,fragmentShader);
 				int programHandle1 = GLES20.glCreateProgram();
 				if (programHandle1 != 0)
@@ -194,24 +200,23 @@ public class ExampleWall {
 				GLES20.glDeleteProgram(programHandle1);
 				programHandle1 = 0;
 				}
-				}
-				if (programHandle == 0 || programHandle1==0)
+				}*/
+				if (programHandle[h] == 0)
 				{
 				throw new RuntimeException("Error creating program.");
 				}
-				 mMVPMatrixHandle=new int[2];
-						 mPositionHandle=new int[2];
-								 mTextureHandle=new int[2];
-				        mMVPMatrixHandle[0] = GLES20.glGetUniformLocation(programHandle, "u_MVPMatrix");
-				        mPositionHandle[0] = GLES20.glGetAttribLocation(programHandle, "a_Position");
-				        mTextureHandle[0]=GLES20.glGetAttribLocation(programHandle, "a_TexCoordinate");
-				        GLES20.glUseProgram(programHandle);
-				        mMVPMatrixHandle[1] = GLES20.glGetUniformLocation(programHandle1, "u_MVPMatrix");
+				 
+				        mMVPMatrixHandle[h] = GLES20.glGetUniformLocation(programHandle[h], "u_MVPMatrix");
+				        mPositionHandle[h] = GLES20.glGetAttribLocation(programHandle[h], "a_Position");
+				        mTextureHandle[h]=GLES20.glGetAttribLocation(programHandle[h], "a_TexCoordinate");
+				        GLES20.glUseProgram(programHandle[h]);
+				        
+				        /*mMVPMatrixHandle[1] = GLES20.glGetUniformLocation(programHandle1, "u_MVPMatrix");
 				        mPositionHandle[1] = GLES20.glGetAttribLocation(programHandle1, "a_Position");
 				        mTextureHandle[1]=GLES20.glGetAttribLocation(programHandle1, "a_TexCoordinate");
 				       
-				        GLES20.glUseProgram(programHandle1);
-				}
+				        GLES20.glUseProgram(programHandle1);*/
+				}}
 	public int loadShader(int type,String shadercode){
 		int shader=GLES20.glCreateShader(type);
 		GLES20.glShaderSource(shader, shadercode);
