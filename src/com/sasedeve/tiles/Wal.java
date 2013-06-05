@@ -123,7 +123,7 @@ public class Wal {
 			 
 	     +   "   gl_FragColor = baseColor;   \n"	
 			+ "} \n";
-	final String vertexShader1 =
+	/*final String vertexShader1 =
 			"uniform mat4 u_MVPMatrix; \n"	
 
 			+ "attribute vec4 a_Position; \n"	
@@ -152,7 +152,7 @@ public class Wal {
 			 
 	     +   "   gl_FragColor = baseColor;   \n"	
 			+ "} \n";
-			
+			*/
 			
 	public Wal(Context context,float s){
 				this.context=context;
@@ -197,8 +197,8 @@ public class Wal {
 				programHandle = 0;
 				}
 				}
-				int vertexShaderHandle1=loadShader(GLES20.GL_VERTEX_SHADER,vertexShader1);	
-				int fragmentShaderHandle1=loadShader(GLES20.GL_FRAGMENT_SHADER,fragmentShader1);
+				int vertexShaderHandle1=loadShader(GLES20.GL_VERTEX_SHADER,vertexShader);	
+				int fragmentShaderHandle1=loadShader(GLES20.GL_FRAGMENT_SHADER,fragmentShader);
 				int programHandle1 = GLES20.glCreateProgram();
 				if (programHandle1 != 0)
 				{
@@ -246,11 +246,10 @@ public class Wal {
 			{	  
     	
     		
-    		mTextureHandle = loadGLTexture(context, R.drawable.h);	
+    				mTextureHandle = loadGLTexture(context, R.drawable.h);	
     		
     		
-		
-			        mWallVertices.position(0);
+    				mWallVertices.position(0);
 			        GLES20.glVertexAttribPointer(mPositionHandle, mPositionDataSize, GLES20.GL_FLOAT, false,0, mWallVertices);
 			        GLES20.glEnableVertexAttribArray(mPositionHandle);
 			        
