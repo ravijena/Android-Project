@@ -13,7 +13,7 @@ import android.opengl.GLUtils;
 
 
 public class Wal {
-	//trupti
+	//ravijena
 	private final Context context;
 	private int mMVPMatrixHandle;
 	private int mPositionHandle;
