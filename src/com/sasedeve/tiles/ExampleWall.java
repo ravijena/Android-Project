@@ -18,7 +18,7 @@ public class ExampleWall {
 
 	
 	private final int mPositionDataSize = 3;
-	private final FloatBuffer mWallVertices[];//,mWallVertices1;
+	private final FloatBuffer mWallVertices[];
 	private final int mBytesPerFloat = 4;
 	private final FloatBuffer texturebuffer[];
 	private int mTextureHandle[];
@@ -137,7 +137,8 @@ public class ExampleWall {
 				mMVPMatrixHandle=new int[2];
 				mPositionHandle=new int[2];
 				mTextureHandle=new int[2];	
-				int programHandle[]=new int[2];
+				//int programHandle[]=new int[2];
+				int programHandle=0;
 				int vertexShaderHandle=loadShader(GLES20.GL_VERTEX_SHADER,vertexShader);	
 				int fragmentShaderHandle=loadShader(GLES20.GL_FRAGMENT_SHADER,fragmentShader);
 				for(int h=0;h<2;h++)
@@ -161,24 +162,24 @@ public class ExampleWall {
 			/*int vertexShaderHandle=loadShader(GLES20.GL_VERTEX_SHADER,vertexShader);	
 			int fragmentShaderHandle=loadShader(GLES20.GL_FRAGMENT_SHADER,fragmentShader);*/
 			
-			programHandle[h] = GLES20.glCreateProgram();
+			programHandle = GLES20.glCreateProgram();
 			
 
-				if (programHandle[h] != 0)
+				if (programHandle != 0)
 				{
-				GLES20.glAttachShader(programHandle[h], vertexShaderHandle);	
-				GLES20.glAttachShader(programHandle[h], fragmentShaderHandle);
-				GLES20.glUseProgram(programHandle[h]);
-			    GLES20.glBindAttribLocation(programHandle[h], 0, "a_Position");
-				GLES20.glBindAttribLocation(programHandle[h], 1, "a_TexCoordinate");
-				GLES20.glLinkProgram(programHandle[h]);
+				GLES20.glAttachShader(programHandle, vertexShaderHandle);	
+				GLES20.glAttachShader(programHandle, fragmentShaderHandle);
+				GLES20.glUseProgram(programHandle);
+			    GLES20.glBindAttribLocation(programHandle, 0, "a_Position");
+				GLES20.glBindAttribLocation(programHandle, 1, "a_TexCoordinate");
+				GLES20.glLinkProgram(programHandle);
 			    final int[] linkStatus = new int[1];
-				GLES20.glGetProgramiv(programHandle[h], GLES20.GL_LINK_STATUS, linkStatus, 0);
+				GLES20.glGetProgramiv(programHandle, GLES20.GL_LINK_STATUS, linkStatus, 0);
 
 				if (linkStatus[0] == 0)
 				{	
-				GLES20.glDeleteProgram(programHandle[h]);
-				programHandle[h] = 0;
+				GLES20.glDeleteProgram(programHandle);
+				programHandle = 0;
 				}
 				}
 				/*int vertexShaderHandle1=loadShader(GLES20.GL_VERTEX_SHADER,vertexShader);	
@@ -201,15 +202,15 @@ public class ExampleWall {
 				programHandle1 = 0;
 				}
 				}*/
-				if (programHandle[h] == 0)
+				if (programHandle == 0)
 				{
 				throw new RuntimeException("Error creating program.");
 				}
 				 
-				        mMVPMatrixHandle[h] = GLES20.glGetUniformLocation(programHandle[h], "u_MVPMatrix");
-				        mPositionHandle[h] = GLES20.glGetAttribLocation(programHandle[h], "a_Position");
-				        mTextureHandle[h]=GLES20.glGetAttribLocation(programHandle[h], "a_TexCoordinate");
-				        GLES20.glUseProgram(programHandle[h]);
+				        mMVPMatrixHandle[h] = GLES20.glGetUniformLocation(programHandle, "u_MVPMatrix");
+				        mPositionHandle[h] = GLES20.glGetAttribLocation(programHandle, "a_Position");
+				        mTextureHandle[h]=GLES20.glGetAttribLocation(programHandle, "a_TexCoordinate");
+				        GLES20.glUseProgram(programHandle);
 				        
 				        /*mMVPMatrixHandle[1] = GLES20.glGetUniformLocation(programHandle1, "u_MVPMatrix");
 				        mPositionHandle[1] = GLES20.glGetAttribLocation(programHandle1, "a_Position");
@@ -239,17 +240,16 @@ public class ExampleWall {
     	//2 is to be replace by it size and drawing h should do some trick to do some changes
     		for(int h=0;h<2;h++){
     			mTextureHandle[h] = loadGLTexture(context, drawing[h]);	
-        		
-        		
-				mWallVertices[h].position(0);
+        		//vertices
+    			mWallVertices[h].position(0);
 		        GLES20.glVertexAttribPointer(mPositionHandle[h], mPositionDataSize, GLES20.GL_FLOAT, false,0, mWallVertices[h]);
 		        GLES20.glEnableVertexAttribArray(mPositionHandle[h]);
-		         //texture1
+		         //texture
 		        texturebuffer[h].position(0);
 		        GLES20.glVertexAttribPointer(mTextureHandle[h],2,GLES20.GL_FLOAT,false,0,texturebuffer[h]);
 		        GLES20.glEnableVertexAttribArray(mTextureHandle[h]);
 		        GLES20.glUniformMatrix4fv(mMVPMatrixHandle[h], 1, false, mMVPMatrix, 0);
-		        //drawing one part
+		        //draw array
 		        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, size2[h]);
     		}
     			/*	mTextureHandle[0] = loadGLTexture(context, R.drawable.h);	
@@ -296,7 +296,7 @@ public class ExampleWall {
 			     final BitmapFactory.Options options = new BitmapFactory.Options();
 			     options.inScaled = false;  
 			     final Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resourceId, options);
-			    // GLES20.glActiveTexture(GLES20.GL_TEXTURE1 );
+			     GLES20.glActiveTexture(GLES20.GL_TEXTURE );
 			     GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureHandle[0]);
 			     GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
 			     GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_NEAREST);
